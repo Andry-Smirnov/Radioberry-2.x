@@ -1,5 +1,4 @@
-## Radioberry software installation script
-
+# Radioberry software installation script
 
 This is a developement release of versions of the Radioberry sofware.
 
@@ -10,24 +9,25 @@ Nowadays people have to choose too much...hi, the whole software stack will be i
 https://github.com/pa3gsb/Radioberry-2.x/wiki/Radioberry-Software-stack
 
 This avoids possible problems by selecting the wrong set of software components.
- 
-Installation is easy: 
+
+Installation is easy.
 
 Open a command window and executing the following commands:
 
-
+```sh
 cd /tmp
 wget https://raw.githubusercontent.com/pa3gsb/Radioberry-2.x/master/SBC/rpi-4/releases/dev/radioberry_install.sh
 sudo chmod +x radioberry_install.sh
 ./radioberry_install.sh
-
+```
 
 This script does help in installing the development version of pihpsdr using the git repo of John Melton.
 
 Open a command window and executing the following commands:
 
-
+```sh
 cd /tmp
 wget  https://raw.githubusercontent.com/pa3gsb/Radioberry-2.x/master/SBC/rpi-4/releases/dev/pihpsdr_install.sh
 sudo chmod +x pihpsdr_install.sh
 ./pihpsdr_install.sh
+```

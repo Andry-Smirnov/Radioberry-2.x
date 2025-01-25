@@ -1,5 +1,4 @@
-## Radioberry Device Driver
-
+# Radioberry Device Driver
 
 This device driver is a special for the RPI-4.
 
@@ -8,134 +7,141 @@ different than deploying on the different rpi's running different kernel version
 
 This means, for now, that you need to build the driver yourself. Which is not that complex.
 
+## Build step
 
-Build step:
+1. Get the linux headers:
 
-First get the linux headers:
+    ```bash
+    sudo apt-get install raspberrypi-kernel-headers
+    ```
 
-sudo apt-get install raspberrypi-kernel-headers
+2. You need to start the build process: use in a command window, in the folder driver (which contains the `Makefile`):
 
-Second you need to start the build process:
+    ```bash
+    make
+    ```
 
-use in a command window, in the folder driver (which contains the Makefile) : make
+This will results in a `radioberry.ko` file.
 
-This will results in a radioberry.ko file.
+---
 
+## Hereby a step by step setup
 
+### Step 1
 
-Hereby a step by step setup:
+`CL025` FPGA Radioberry users:
 
-
-Step -1-
-
-CL025 FPGA Radioberry users:
 Copy the gateware radioberry.rbf into the folder /lib/firmware
 
-CL016 FPGA Radioberry users:
-Rename your radioberry-10CL016.rbf gateware to radioberry.rbf 
-Copy the gateware radioberry.rbf into the folder /lib/firmware
+`CL016` FPGA Radioberry users:
 
-Loading the device driver will also load the gateware (content of the rbf file) into the FPGA 
+Rename your `radioberry-10CL016.rbf` gateware to `radioberry.rbf`
 
+Copy the gateware `radioberry.rbf` into the folder `/lib/firmware`
 
+Loading the device driver will also load the gateware (content of the `rbf` file) into the FPGA.
 
-Step -2-
+### Step 2
 
-Make a module folder in the driver area of your running kernel, and install the driver called radioberry.ko in this folder.
+Make a module folder in the driver area of your running kernel, and install the driver called `radioberry.ko` in this folder.
 
+```bash
 cd /lib/modules/$(uname -r)/kernel/drivers
-
 sudo mkdir sdr
-
 copy the radioberry.ko to /lib/modules/$(uname -r)/kernel/drivers/sdr
+```
 
+### Step 3
 
+Run the command:
 
-Step -3-
+```bash
+sudo depmod 
+```
 
-run the command:  sudo depmod 
+#### Check
 
-Check:  use the command: modinfo radioberry 
+Use the command:
+
+```bash
+modinfo radioberry 
+```
+
 Gives you detailed info about the radioberry device driver.
 
+### Step 4
 
+Load the device driver.
 
-Step -4-
+Run the command:
 
-load the device driver 
+```bash
+sudo modprobe radioberry
+```
 
-run the command: sudo modprobe radioberry
+In the folder `/dev` the radioberry must be present using the ls command.
+Also possible to check by the command:
 
-In the folder /dev the radioberry must be present using the ls command.
-Also possible to check by the command: lsmod |grep radioberry
+```bash
+lsmod |grep radioberry
+```
 
+### Step 5
 
-Step -5-
+#### Optional step
 
-Optional step.
+```bash
+dtc -@ -I dts -O dtb -o radioberry.dtbo radioberry.dts
+```
 
-Execute: dtc -@ -I dts -O dtb -o radioberry.dtbo radioberry.dts
+This results in an overlay fiel `radioberry.dtbo`
 
-This results in an overlay fiel radioberry.dtbo
+Copy this `radioberry.dtbo` into `/boot/overlays`
 
-cp this radioberry.dtbo into /boot/overlays
+add the following line in `config.txt`:
 
-add the following line in config.txt:
-
+```text
 dtoverlay=radioberry
+```
 
 This loads the kernel module during boot.
 
-
-Alternative step:
+#### Alternative step
 
 If you like to load the device driver during boot, execute the following:
 
-/etc/modules-load.d/modules.conf
+in `/etc/modules-load.d/modules.conf` add the device driver in this file, see content example:
 
-add the device driver in this file, see content example:
-
-\# /etc/modules: kernel modules to load at boot time.
-
-\# 
-
-\# This file contains the names of kernel modules that should be loaded
-
-\# at boot time, one per line. Lines beginning with "#" are ignored.
-
+```bash
+# /etc/modules: kernel modules to load at boot time.
+# 
+# This file contains the names of kernel modules that should be loaded
+# at boot time, one per line. Lines beginning with "#" are ignored.
 i2c-dev
-
 snd-mixer-oss
-
 snd-pcm-oss
-
 radioberry
+```
 
-
-
-Step -6-
+### Step 6
 
 Optional step.
 
+```bash
 sudo chmod 666 /dev/radioberry
+```
 
-Makes it possible to run the radioberry firmware version for the device driver, running as the logged in user:
+### Step 7
 
+Makes it possible to run the radioberry firmware version for the device driver, running as the logged in user.
 
+Run using the command `./radioberry firmware` or `sudo ./radioberry`
 
-Step -7-
+### Step 8
 
-Run using the command ./radioberry firmware or sudo ./radioberry
-
-
-
-Step -8-
 Start a SDR program!
-
 
 Have fun listening to your Radioberry using the radioberry device driver.
 
 73 Johan
 PA3GSB
-
-

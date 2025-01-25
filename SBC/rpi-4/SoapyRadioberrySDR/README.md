@@ -2,7 +2,7 @@
 
 ## Installation instructions
 
-```
+```sh
 git clone <>
 cd <sub folder>
 mkdir build
@@ -18,4 +18,4 @@ Need the radioberry device driver.
 
 ## Documentation
 
-Initial version supporting RX. 
+Initial version supporting RX.
