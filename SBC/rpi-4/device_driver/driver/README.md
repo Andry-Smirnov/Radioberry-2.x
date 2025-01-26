@@ -29,15 +29,9 @@ This will results in a `radioberry.ko` file.
 
 ### Step 1
 
-`CL025` FPGA Radioberry users:
+- `CL025` FPGA Radioberry users: copy the gateware `radioberry.rbf` into the folder `/lib/firmware`.
 
-Copy the gateware radioberry.rbf into the folder /lib/firmware
-
-`CL016` FPGA Radioberry users:
-
-Rename your `radioberry-10CL016.rbf` gateware to `radioberry.rbf`
-
-Copy the gateware `radioberry.rbf` into the folder `/lib/firmware`
+- `CL016` FPGA Radioberry users: rename your `radioberry-10CL016.rbf` gateware to `radioberry.rbf`, copy the gateware `radioberry.rbf` into the folder `/lib/firmware`
 
 Loading the device driver will also load the gateware (content of the `rbf` file) into the FPGA.
 
