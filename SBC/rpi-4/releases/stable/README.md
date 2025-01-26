@@ -10,7 +10,7 @@ https://github.com/pa3gsb/Radioberry-2.x/wiki/Radioberry-Software-stack
 
 This avoids possible problems by selecting the wrong set of software components.
 
-Installation is easy.
+## Installation
 
 Open a command window and executing the following commands:
 
@@ -21,7 +21,7 @@ sudo chmod +x radioberry_install.sh
 ./radioberry_install.sh
 ```
 
-Installation of `SOAPY`:
+## Installation of `SOAPY`
 
 ```sh
 cd /tmp
